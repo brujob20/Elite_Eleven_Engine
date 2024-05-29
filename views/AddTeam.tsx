@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const AddTeam = () => {
     const [name, setName] = useState('');
@@ -13,7 +14,10 @@ const AddTeam = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <LinearGradient
+            colors={['#e0f7fa', '#c8e6c9']}
+            style={styles.container}
+        >
             <Text style={styles.label}>Add Team:</Text>
             <TextInput
                 style={styles.input}
@@ -38,9 +42,14 @@ const AddTeam = () => {
                 <Picker.Item label="U12" value="U12" />
                 <Picker.Item label="U13" value="U13" />
                 <Picker.Item label="U14" value="U14" />
+                <Picker.Item label="U15" value="U15" />
+                <Picker.Item label="U18" value="U18" />
+                <Picker.Item label="U21" value="U21" />
             </Picker>
-            <Button title="Team hinzufügen" onPress={handleSubmit} color="#2a9d8f" />
-        </View>
+            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                <Text style={styles.buttonText}>Team hinzufügen</Text>
+            </TouchableOpacity>
+        </LinearGradient>
     );
 };
 
@@ -49,7 +58,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 20,
         justifyContent: 'center',
-        backgroundColor: '#fff',
     },
     input: {
         height: 40,
@@ -58,6 +66,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         borderColor: '#ccc',
+        backgroundColor: '#f0f0f0',
         width: '100%',
     },
     picker: {
@@ -67,12 +76,33 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         borderColor: '#ccc',
+        backgroundColor: '#f0f0f0',
         width: '100%',
     },
     label: {
-        fontSize: 20,
+        fontSize: 24,
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginBottom: 20,
+        color: '#2a9d8f',
+    },
+    button: {
+        backgroundColor: '#2a9d8f',
+        paddingVertical: 15,
+        paddingHorizontal: 30,
+        borderRadius: 25,
+        marginVertical: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 3,
+        width: '100%',
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'bold',
     },
 });
 
