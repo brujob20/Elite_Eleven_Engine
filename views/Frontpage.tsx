@@ -1,47 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import {View, Text, StyleSheet, ScrollView, Button} from 'react-native';
-//import { getTeams } from '../services/teamService'; // Angenommene Funktion zur Abfrage der Datenbank
+import React from 'react';
+import { View, Text, StyleSheet, Button } from 'react-native';
 
-const Frontpage = ({navigation}) => {
-    const [teams, setTeams] = useState([]);
-
-    /*useEffect(() => {
-        // Simulieren Sie das Laden der Teams
-        // getTeams().then(data => setTeams(data)); // Aktivieren Sie diese Zeile, wenn die Funktion verfügbar ist
-        setTeams([
-            { name: "Team Alpha", spielerAmount: 12, Altersklasse: "U17" },
-            { name: "Team Beta", spielerAmount: 15, Altersklasse: "U19" }
-        ]);
-    }, []);
-
-     */
-
+const Frontpage = ({ navigation }:any) => {
     return (
-
+        <View style={styles.container}>
             <Button
                 title="Add Team"
                 onPress={() => navigation.navigate('AddTeam')}
-                color="#2a9d8f" // Farbe passend zum Design
+                color="#2a9d8f"
             />
+            <Button
+                title="Show Teams"
+                onPress={() => navigation.navigate('ShowTeams')}
+                color="#2a9d8f"
+            />
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
-        backgroundColor: '#fff'
-    },
-    teamContainer: {
-        padding: 20,
-        marginBottom: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: '#f0f0f0',
-        borderRadius: 10
     },
-    teamName: {
-        fontSize: 20,
-        fontWeight: 'bold'
-    }
+    title: {
+        fontSize: 24,
+        marginBottom: 20,
+    },
 });
 
 export default Frontpage;

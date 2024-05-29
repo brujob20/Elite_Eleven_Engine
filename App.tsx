@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Frontpage from './views/Frontpage';
 import AddTeam from './views/AddTeam';
+import showTeams from "./views/showTeams";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,7 @@ export default function App() {
         <Stack.Navigator initialRouteName="Frontpage">
           <Stack.Screen name="Frontpage" component={Frontpage} />
           <Stack.Screen name="AddTeam" component={AddTeam} />
+          <Stack.Screen name="ShowTeams" component={showTeams} />
         </Stack.Navigator>
       </NavigationContainer>
   );
