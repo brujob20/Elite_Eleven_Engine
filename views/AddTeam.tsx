@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Text } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import {postTeams} from "../srvice/api";
+import {ITeam} from "../model/ITeam";
 
 const AddTeam = () => {
     const [name, setName] = useState('');
     const [spielerAmount, setSpielerAmount] = useState('');
-    const [Altersklasse, setAltersklasse] = useState('');
+    const [ageGroup, setAltersklasse] = useState('');
 
     const handleSubmit = () => {
-        const team = { name, spielerAmount: parseInt(spielerAmount, 10), Altersklasse };
+        const team:any = { name: name, playerAmount: parseInt(spielerAmount, 10), ageGroup: ageGroup };
         console.log(team);
+        postTeams(team);
     };
 
     return (
@@ -29,15 +32,16 @@ const AddTeam = () => {
                 keyboardType="numeric"
             />
             <Picker
-                selectedValue={Altersklasse}
+                selectedValue={ageGroup}
                 style={styles.picker}
                 onValueChange={(itemValue) => setAltersklasse(itemValue)}
             >
                 <Picker.Item label="- Select -" value="" />
-                <Picker.Item label="U11" value="U11" />
-                <Picker.Item label="U12" value="U12" />
                 <Picker.Item label="U13" value="U13" />
-                <Picker.Item label="U14" value="U14" />
+                <Picker.Item label="U15" value="U15" />
+                <Picker.Item label="U17" value="U17" />
+                <Picker.Item label="U19" value="U19" />
+                <Picker.Item label="Herren" value="Herren" />
             </Picker>
             <Button title="Team hinzufügen" onPress={handleSubmit} color="#2a9d8f" />
         </View>
