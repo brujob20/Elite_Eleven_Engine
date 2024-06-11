@@ -1,40 +1,39 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, FlatList, Animated, TextInput, TouchableOpacity} from 'react-native';
-import { teams } from '../data/mockData';
-import {getTeams} from "../srvice/api";
-import {ITeam} from "../model/ITeam";
-import ScrollView = Animated.ScrollView;
-import {FaSearch} from "react-icons/fa";
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { getTeams } from "../srvice/api";
+import { ITeam } from "../model/ITeam";
+import { FaSearch } from "react-icons/fa";
 import { IoFilter } from "react-icons/io5";
-import {Picker} from "@react-native-picker/picker";
+import { Picker } from "@react-native-picker/picker";
 
 const ShowTeams = () => {
-    const [teams, setTeams] = React.useState([]);
+    const [teams, setTeams] = useState<ITeam[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filterVisible, setFilterVisible] = useState(false);
     const [selectedValue, setSelectedValue] = useState('');
 
+    const fetchTeams = async () => {
+        try {
+            const response = await getTeams();
+            setTeams(response);
+        } catch (error) {
+            console.error("Fehler beim Laden der Teams:", error);
+        }
+    };
 
-    const filteredTeamsName = teams.filter(team =>
-        team.name.toLowerCase().includes(searchQuery.toLowerCase())
+    useFocusEffect(
+        React.useCallback(() => {
+            fetchTeams();
+        }, [])
     );
 
-    useEffect(() => {
-        const fetchTeams = async () => {
-            try {
-                const response = await getTeams();
-                setTeams(response);
-            } catch (error) {
-                console.error("Failed to fetch training plans:", error);
-            }
-        };
-
-        fetchTeams();
-    }, []);
-
+    const filteredTeams = teams.filter(team =>
+        team.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        (selectedValue === '' || team.ageGroup === selectedValue)
+    );
 
     return (
-
         <View style={styles.container}>
             <View style={styles.fixedHeader}>
                 <FaSearch style={styles.icon} />
@@ -53,28 +52,34 @@ const ShowTeams = () => {
                         style={styles.picker}
                         onValueChange={(itemValue) => setSelectedValue(itemValue)}
                     >
-                        <Picker.Item label="U13" value="U13" style={styles.pickerItem}/>
-                        <Picker.Item label="U15" value="U15" style={styles.pickerItem}/>
-                        <Picker.Item label="U17" value="U17" style={styles.pickerItem}/>
-                        <Picker.Item label="U19" value="U19" style={styles.pickerItem}/>
-                        <Picker.Item label="Herren" value="Herren" />
+                        <Picker.Item label="- Select -" value="" />
+                        <Picker.Item label="U13" value="U13" style={styles.pickerItem} />
+                        <Picker.Item label="U15" value="U15" style={styles.pickerItem} />
+                        <Picker.Item label="U17" value="U17" style={styles.pickerItem} />
+                        <Picker.Item label="U19" value="U19" style={styles.pickerItem} />
+                        <Picker.Item label="Herren" value="Herren" style={styles.pickerItem} />
                     </Picker>
                 )}
             </View>
-            <ScrollView style={styles.scrollView}>
-                {filteredTeamsName.map((team, index) => (
-                    <View key={index} style={styles.card}>
-                        <Text style={styles.title}>{team.name}</Text>
-                        <Text>Spieleranzahl: {team.playerAmount}</Text>
-                        <Text>Altersklasse: {team.ageGroup}</Text>
-                    </View>
-                ))}
-            </ScrollView>
+            {filteredTeams.length === 0 ? (
+                <Text style={styles.noResults}>Keine Ergebnisse gefunden</Text>
+            ) : (
+                <FlatList
+                    data={filteredTeams}
+                    keyExtractor={(item) => item._id}
+                    renderItem={({ item }) => (
+                        <View style={styles.card}>
+                            <Text style={styles.title}>{item.name}</Text>
+                            <Text>Spieleranzahl: {item.playerAmount}</Text>
+                            <Text>Altersklasse: {item.ageGroup}</Text>
+                        </View>
+                    )}
+                    contentContainerStyle={{ paddingTop: 100 }} // Abstand für den Header
+                />
+            )}
         </View>
     );
 };
-
-
 
 const styles = StyleSheet.create({
     container: {
@@ -132,7 +137,13 @@ const styles = StyleSheet.create({
     pickerItem: {
         height: 44, // Höhe jedes Picker-Elements
         color: '#333', // Textfarbe der Picker-Elemente
-    }
+    },
+    noResults: {
+        textAlign: 'center',
+        marginTop: 20,
+        fontSize: 18,
+        color: '#777',
+    },
 });
 
 export default ShowTeams;

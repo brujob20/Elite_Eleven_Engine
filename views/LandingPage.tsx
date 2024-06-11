@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, Button } from 'react-native';
 
-// @ts-ignore
-const LandingPage = ({ navigation }) => {
+const LandingPage = ({ navigation }:any) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Willkommen bei Elite Eleven Engine</Text>
@@ -15,7 +14,7 @@ const LandingPage = ({ navigation }) => {
             </Text>
             <Button
                 title="Los geht's!"
-                onPress={() => navigation.navigate('show Teams')}
+                onPress={() => navigation.navigate('RandomMatch')}
                 color="#2a9d8f"
             />
         </View>
