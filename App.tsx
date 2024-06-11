@@ -9,6 +9,7 @@ import RandomMatch from "./views/RandomMatch";
 import { StyleSheet } from "react-native";
 import { FaHome } from "react-icons/fa";
 import ShowTeams from "./views/ShowTeams";
+import { TbTournament } from "react-icons/tb";
 
 const Tab = createBottomTabNavigator();
 
@@ -56,7 +57,7 @@ export default function App() {
                     options={{
                         tabBarLabel: 'Random Match',
                         tabBarIcon: ({ color, size }) => (
-                            <IoIosAdd color={"#2a9d8f"} size={size} />
+                            <TbTournament color={"#2a9d8f"} size={size} />
                         ),
                     }}
                 />
