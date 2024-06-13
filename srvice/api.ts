@@ -18,3 +18,8 @@ export const postTeams = async (team:ITeam) => {
         throw error;
     }
 };
+
+export const deleteTeam = async (id) => {
+    const response = await axios.delete(API_URL+id);
+    return response.data;
+};

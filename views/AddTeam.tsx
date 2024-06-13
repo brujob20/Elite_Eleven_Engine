@@ -25,8 +25,7 @@ const AddTeam = () => {
             setName('');
             setSpielerAmount('');
             setAgeGroup('');
-            // @ts-ignore
-            navigation.navigate('Home');  // Navigiere zur Home-Seite
+            navigation.navigate('Home');
         } catch (error) {
             Alert.alert("Fehler", "Team konnte nicht hinzugefügt werden");
         }
