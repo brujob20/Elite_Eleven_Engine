@@ -1,9 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
-const LandingPage = ({ navigation }:any) => {
+const LandingPage = ({ navigation }: any) => {
     return (
-        <View style={styles.container}>
+        <LinearGradient
+            colors={['#e0f7fa', '#c8e6c9']}
+            style={styles.container}
+        >
             <Text style={styles.title}>Willkommen bei Elite Eleven Engine</Text>
             <Image
                 source={{ uri: 'assets/MainIcon.png' }}
@@ -17,7 +21,7 @@ const LandingPage = ({ navigation }:any) => {
                 onPress={() => navigation.navigate('RandomMatch')}
                 color="#2a9d8f"
             />
-        </View>
+        </LinearGradient>
     );
 };
 
@@ -26,12 +30,16 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f5f5f5',
+        padding: 20,
     },
     title: {
-        fontSize: 20,
+        fontSize: 28,
         fontWeight: 'bold',
+        color: '#2a9d8f',
         marginBottom: 20,
+        textShadowColor: 'rgba(0, 0, 0, 0.1)',
+        textShadowOffset: { width: -1, height: 1 },
+        textShadowRadius: 5,
     },
     image: {
         width: 230,
@@ -44,7 +52,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginHorizontal: 20,
         marginBottom: 20,
-    }
+        color: '#333',
+    },
 });
 
 export default LandingPage;

@@ -6,6 +6,7 @@ import { ITeam } from "../model/ITeam";
 import { FaSearch } from "react-icons/fa";
 import { IoFilter } from "react-icons/io5";
 import { Picker } from "@react-native-picker/picker";
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ShowTeams = () => {
     const [teams, setTeams] = useState<ITeam[]>([]);
@@ -34,7 +35,10 @@ const ShowTeams = () => {
     );
 
     return (
-        <View style={styles.container}>
+        <LinearGradient
+            colors={['#e0f7fa', '#c8e6c9']}
+            style={styles.container}
+        >
             <View style={styles.fixedHeader}>
                 <FaSearch style={styles.icon} />
                 <TextInput
@@ -77,7 +81,7 @@ const ShowTeams = () => {
                     contentContainerStyle={{ paddingTop: 100 }} // Abstand für den Header
                 />
             )}
-        </View>
+        </LinearGradient>
     );
 };
 
